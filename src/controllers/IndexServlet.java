@@ -33,7 +33,7 @@ public class IndexServlet extends HttpServlet {
                 request.getSession().removeAttribute("flush");
 
             }
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/index.jsp");
             rd.forward(request, response);
         }
 

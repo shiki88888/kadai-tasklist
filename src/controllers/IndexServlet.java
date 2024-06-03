@@ -36,9 +36,10 @@ public class IndexServlet extends HttpServlet {
         EntityManager em = DBUtil.createEntityManager();
 
         List<Tasks> tasks = em.createNamedQuery("getAllTasks", Tasks.class).getResultList();
-        response.getWriter().append(Integer.valueOf(tasks.size()).toString());
 
         em.close();
+
+        request.setAttribute("tasks", tasks);
 
             if(request.getSession().getAttribute("flush") != null) {
                 request.setAttribute("flush", request.getSession().getAttribute("flush"));

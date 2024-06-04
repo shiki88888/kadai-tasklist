@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 
 import javax.persistence.EntityManager;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,24 +37,23 @@ public class CreateServlet extends HttpServlet {
             EntityManager em = DBUtil.createEntityManager();
             em.getTransaction().begin();
 
-            Tasks m = new Tasks();
-
+            Tasks tsk = new Tasks();
 
             String content = request.getParameter("content");
-            m.setContent(content);
+            tsk.setContent(content);
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            m.setCreated_at(currentTime);
-            m.setUpdated_at(currentTime);
+            tsk.setCreated_at(currentTime);
+            tsk.setUpdated_at(currentTime);
 
+            em.persist(tsk);
+            em.getTransaction().commit();
+            em.close();
 
-
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/new.jsp");
-                rd.forward(request, response);
-            }
-                // indexのページにリダイレクト
-                response.sendRedirect(request.getContextPath() + "/index");
-            }
+            // indexのページにリダイレクト
+            response.sendRedirect(request.getContextPath() + "/index");
+        }
 
     }
 
+}
